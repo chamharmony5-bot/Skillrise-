@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b0b">
+<title>SkillRise — Learn It. Build It. Use It.</title>
+<style>
+:root{--black:#0b0b0b;--panel:#151515;--gold:#f4c542;--lightgold:#ffe7a0;--white:#f7f7f7;--muted:#b9b9b9;--line:#333}
+*{box-sizing:border-box}body{margin:0;background:var(--black);color:var(--white);font-family:Arial,Helvetica,sans-serif;line-height:1.5}button,input{font:inherit}button{cursor:pointer}.wrap{max-width:1100px;margin:auto;padding:0 20px}
+header{border-bottom:1px solid #242424;position:sticky;top:0;background:#0b0b0bf2;backdrop-filter:blur(10px);z-index:5}.nav{display:flex;align-items:center;justify-content:space-between;min-height:72px;gap:12px}.brand{font-size:1.45rem;font-weight:800;letter-spacing:-.5px}.brand span{color:var(--gold)}.brand small{display:block;font-size:.62rem;letter-spacing:2px;color:#ddd;font-weight:500}.navlinks{display:flex;gap:18px;align-items:center}.navlinks a{color:#ddd;text-decoration:none;font-size:.9rem}.navlinks a:hover{color:var(--gold)}.btn{border:0;border-radius:9px;background:var(--gold);color:#111;padding:11px 16px;font-weight:700}.btn.secondary{background:transparent;border:1px solid #777;color:white}.hero{padding:64px 0 48px;display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}.pill{display:inline-block;border:1px solid #80650f;color:var(--gold);padding:5px 11px;border-radius:30px;font-size:.8rem;font-weight:bold}.hero h1{font-size:clamp(2.3rem,6vw,4.4rem);line-height:1.04;letter-spacing:-2px;margin:17px 0}.hero h1 span{color:var(--gold)}.hero p{color:#ccc;max-width:540px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.hero-card{border:1px solid #48402b;background:radial-gradient(circle at 80% 20%,#4a3812 0,#1b1811 25%,#131313 60%);border-radius:20px;padding:28px;min-height:300px;display:flex;flex-direction:column;justify-content:space-between}.hero-icon{font-size:4rem;color:var(--gold)}.hero-card h2{font-size:1.8rem;margin:0}.stats{display:flex;gap:26px;margin-top:30px;flex-wrap:wrap}.stats strong{display:block;color:var(--gold);font-size:1.3rem}.stats span{color:var(--muted);font-size:.82rem}.section{padding:35px 0 48px;scroll-margin-top:92px} #skillDetail{scroll-margin-top:92px} #lessonReader{scroll-margin-top:92px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:20px}.section h2{font-size:1.8rem;margin:0}.section-head p{margin:5px 0 0;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}.card .icon{font-size:1.8rem}.card h3{margin:8px 0}.card p{color:var(--muted);font-size:.92rem}.tag{font-size:.75rem;color:var(--gold)}.path{display:flex;flex-direction:column}.path .btn{margin-top:auto;align-self:flex-start}.progress-wrap{height:7px;background:#333;border-radius:10px;overflow:hidden;margin:12px 0}.progress{height:100%;background:var(--gold);width:0;transition:width .2s}.lesson-list{display:grid;gap:9px;margin:15px 0}.lesson{display:flex;gap:10px;align-items:center;background:#202020;padding:11px;border-radius:9px}.lesson input{accent-color:var(--gold);width:18px;height:18px}.lesson label{flex:1}.lesson small{color:var(--muted)}.notice{background:#201b0c;border:1px solid #594615;padding:14px;border-radius:10px;color:#e9dba9;font-size:.9rem}.contact{display:flex;gap:10px;flex-wrap:wrap}.contact input{flex:1;min-width:180px;background:#101010;border:1px solid #444;border-radius:9px;padding:12px;color:white}footer{border-top:1px solid #292929;padding:24px 0;color:var(--muted);font-size:.85rem}.hidden{display:none}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--gold);color:#111;padding:12px 18px;border-radius:10px;font-weight:bold;display:none;z-index:9}
+
+.lesson{cursor:pointer}.lesson label{cursor:pointer}.lesson.active{border:1px solid var(--gold);background:#292313}
+.lesson-reader{margin-top:20px;padding:clamp(16px,3vw,28px);background:#101010;border:1px solid #4b411f;border-radius:14px}
+.lesson-reader h3{font-size:1.45rem;margin:8px 0}.lesson-reader h4{color:var(--gold);margin:22px 0 8px}
+.lesson-reader p,.lesson-reader li{color:#e0e0e0;line-height:1.75}
+.lesson-illustration{display:block;width:100%;max-width:600px;height:auto;margin:15px auto;border:1px solid #383838;border-radius:12px;background:#171717}
+.code-sample{white-space:pre-wrap;overflow-wrap:anywhere;background:#050505;border:1px solid #383838;border-radius:10px;padding:15px;color:#ffe7a0;font-family:monospace;font-size:.92rem;line-height:1.65}
+.example-note{border-left:3px solid var(--gold);background:#211c0c;padding:12px 14px;border-radius:0 8px 8px 0;color:#f3e6bc}
+.practice-box{margin-top:18px;padding:16px;background:#1a1a1a;border-radius:10px}.practice-box button{margin:6px 6px 0 0}
+.lesson-nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+@media(max-width:760px){.navlinks{gap:10px}.navlinks a{display:none}.hero{grid-template-columns:1fr;padding-top:42px}.hero-card{min-height:230px}.grid{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.stats{gap:18px}.wrap{padding:0 16px}.hero h1{letter-spacing:-1px}}
+
+/* SkillRise Animated Academy additions */
+.academy-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch}
+.animation-stage{position:relative;min-height:270px;overflow:hidden;border:1px solid #594615;border-radius:15px;background:radial-gradient(circle at 50% 20%,#3b321c,#151515 68%);padding:18px;display:flex;flex-direction:column;justify-content:space-between}
+.stage-label{font-size:.75rem;letter-spacing:1.5px;color:var(--gold);font-weight:bold}
+.animated-board{display:flex;align-items:center;justify-content:center;gap:14px;min-height:130px;flex-wrap:wrap}
+.demo-poster{width:112px;height:132px;border-radius:9px;background:#eee7d7;color:#161616;padding:12px 8px;text-align:center;box-shadow:0 10px 25px #0008;animation:posterFloat 3s ease-in-out infinite}
+.demo-poster strong{display:block;font-size:1.05rem;line-height:1.05;margin:7px 0}.demo-poster span{display:block;font-size:.65rem}.demo-swatch{width:25px;height:25px;border-radius:50%;display:inline-block;margin:5px 2px}
+.demo-arrow{font-size:1.8rem;color:var(--gold);animation:arrowPulse 1.3s ease-in-out infinite}
+.demo-poster.good{background:#182b38;color:#fff;border:2px solid #f4c542;animation:posterFloat 3s ease-in-out infinite reverse}.demo-poster.good strong{color:#f4c542}
+@keyframes posterFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}@keyframes arrowPulse{0%,100%{opacity:.45;transform:translateX(0)}50%{opacity:1;transform:translateX(5px)}}
+.academy-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.academy-controls button[aria-pressed="true"]{background:var(--gold);color:#111;border-color:var(--gold)}
+.academy-caption{background:#201b0c;border-left:3px solid var(--gold);padding:12px;border-radius:0 8px 8px 0;color:#f4e8c3;margin-top:12px}
+.quiz-options{display:grid;gap:8px;margin-top:12px}.quiz-options button{text-align:left}.dashboard-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.dashboard-stat{padding:16px;border-radius:12px;background:#202020;border:1px solid #333}.dashboard-stat strong{display:block;color:var(--gold);font-size:1.5rem}.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.badge{padding:8px 11px;border:1px solid #594615;background:#201b0c;color:#ffe7a0;border-radius:30px;font-size:.82rem}
+@media(max-width:760px){.academy-layout{grid-template-columns:1fr}.dashboard-stats{grid-template-columns:1fr 1fr}.navlinks a:nth-child(2),.navlinks a:nth-child(5){display:none}}
+
+
+/* SkillRise: narrated visual lesson player for every selected skill */
+.skill-film{display:grid;grid-template-columns:130px minmax(0,1fr);gap:16px;align-items:start;margin:16px 0 22px;padding:16px;border:1px solid #5a4a1c;border-radius:15px;background:linear-gradient(135deg,#211b0b,#111);}
+.skill-film-character{position:sticky;top:88px;text-align:center;background:#171717;border:1px solid #453817;border-radius:12px;padding:10px 7px;}
+.sr-avatar{width:76px;height:76px;margin:2px auto 8px;border-radius:50%;display:grid;place-items:center;font-size:42px;background:#f4c542;color:#171717;animation:srFloat 2.4s ease-in-out infinite;}
+.sr-character-name{font-size:.76rem;font-weight:800;color:#ffe7a0}.sr-character-role{font-size:.68rem;color:#bbb}
+.skill-film-main{min-width:0}.skill-film-main h3{margin:2px 0 6px;color:#ffe7a0}.skill-film-main p{margin:6px 0;color:#eee}.skill-film-visual{min-height:125px;border:1px solid #393939;border-radius:11px;background:#191919;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;margin:10px 0;overflow:hidden}.sr-visual-icon{font-size:3.4rem;animation:srPop 1.5s ease-in-out infinite}.sr-visual-card{background:#282313;border:1px solid #66521b;border-radius:10px;padding:10px 14px;max-width:250px}.sr-visual-card strong{display:block;color:#f4c542}.sr-film-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.sr-film-controls button{min-height:42px}.sr-film-progress{height:6px;background:#393939;border-radius:8px;overflow:hidden;margin:12px 0 5px}.sr-film-progress span{display:block;height:100%;width:0;background:#f4c542;transition:width .3s}.sr-film-status{font-size:.78rem;color:#cfcfcf}.sr-film-script{font-size:.9rem;color:#ddd;background:#0b0b0b;border-radius:9px;padding:10px;margin-top:9px}
+@keyframes srFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}@keyframes srPop{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+@media(max-width:560px){.skill-film{grid-template-columns:86px minmax(0,1fr);gap:10px;padding:10px}.sr-avatar{width:58px;height:58px;font-size:32px}.skill-film-visual{padding:10px;gap:7px}.sr-visual-icon{font-size:2.5rem}}
+@media(prefers-reduced-motion:reduce){.sr-avatar,.sr-visual-icon{animation:none}}
+
+
+.voice-tools{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.assistant-box{border:1px solid #625222;background:#17140c;border-radius:14px;padding:18px;margin:20px 0}.assistant-box textarea,.assistant-box input{width:100%;box-sizing:border-box;background:#0c0c0c;border:1px solid #555;border-radius:9px;color:#fff;padding:12px;font:inherit}.assistant-answer{white-space:pre-wrap;line-height:1.65;color:#eee;background:#101010;border-radius:10px;padding:13px;margin-top:12px;min-height:45px}.assistant-note{font-size:.85rem;color:#cfcfcf}.voice-tools .btn{cursor:pointer}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a href="#home" style="color:inherit;text-decoration:none"><div class="brand">Skill<span>Rise</span><small>LEARN IT. BUILD IT. USE IT.</small></div></a>
+  <nav class="navlinks"><a href="#skills">Explore skills</a><a href="#path">Learning path</a><a href="#academy">Animated Academy</a><a href="#projects">Projects</a><a href="#dashboard">My progress</a><a href="#payments">Payments</a><a href="#upgrades">All upgrades</a><button class="btn secondary" onclick="showAbout()">About</button></nav>
+</div></header>
+<main id="home" class="wrap">
+<section class="hero">
+ <div><span class="pill">YOUR FUTURE STARTS HERE</span><h1>Learn useful skills.<br><span>Build real projects.</span></h1>
+ <p>SkillRise helps beginners discover skills, learn one step at a time, make practical projects, and explore ways to use what they learn.</p>
+ <div class="actions"><a href="#skills"><button class="btn">Explore skills →</button></a><a href="#path"><button class="btn secondary">Start learning</button></a></div>
+ <div class="stats"><div><strong>Start free</strong><span>No course fee required</span></div><div><strong>Learn by doing</strong><span>Practical mini-projects</span></div><div><strong>Your pace</strong><span>One step at a time</span></div></div>
+ </div>
+ <div class="hero-card"><div class="hero-icon">✦</div><div><span class="tag">THE SKILLRISE METHOD</span><h2>Small steps.<br><span style="color:var(--gold)">Big possibilities.</span></h2><p>Choose a skill, practise it, and make something you can show.</p></div></div>
+</section>
+<section id="skills" class="section">
+ <div class="section-head"><div><h2>Explore skills</h2><p>Choose a skill to enter a guided class with detailed explanations, visual examples, activities, and a final project.</p></div></div>
+ <div style="margin-bottom:18px"><input id="skillSearch" aria-label="Search skills" placeholder="Search skills (e.g. coding, design, business)…" oninput="filterSkills()" style="width:100%;background:#101010;border:1px solid #444;border-radius:10px;padding:13px;color:white"></div>
+ <div class="grid" id="skillGrid">
+  <article class="card path skill-card" data-search="website development coding html css javascript tech"><div class="icon">💻</div><span class="tag">BEGINNER · 6 LESSONS</span><h3>Website Development</h3><p>Build webpages with HTML, CSS, and JavaScript, starting from zero.</p><button class="btn" onclick="choosePath('web')">View learning path →</button></article>
+  <article class="card path skill-card" data-search="graphic design creative flyers branding visuals"><div class="icon">🎨</div><span class="tag">BEGINNER · 4 LESSONS</span><h3>Graphic Design</h3><p>Learn layout, colour, typography, and create useful designs.</p><button class="btn" onclick="choosePath('design')">View learning path →</button></article>
+  <article class="card path skill-card" data-search="content writing captions articles copywriting"><div class="icon">✍️</div><span class="tag">BEGINNER · 4 LESSONS</span><h3>Content Writing</h3><p>Write clear captions, product descriptions, and short articles.</p><button class="btn" onclick="choosePath('writing')">View learning path →</button></article>
+  <article class="card path skill-card" data-search="video editing reels shorts content media"><div class="icon">🎬</div><span class="tag">BEGINNER · STARTER PATH</span><h3>Video Editing</h3><p>Plan a short video, make clean cuts, add titles, and export a finished clip.</p><button class="btn" onclick="showSkillDetail('Video Editing','1. Plan a 20-second video; 2. Arrange clips in order; 3. Trim pauses and add a title; 4. Check audio and export.','Create a 20-second introduction or tutorial using footage you own.')">View learning path →</button></article>
+  <article class="card path skill-card" data-search="digital marketing social media promotion audience"><div class="icon">📣</div><span class="tag">BEGINNER · STARTER PATH</span><h3>Digital Marketing</h3><p>Understand audiences, write a simple content plan, and measure engagement.</p><button class="btn" onclick="showSkillDetail('Digital Marketing','1. Choose an audience; 2. Define one helpful message; 3. Plan three posts; 4. Review what gets useful engagement.','Create a 3-post launch plan for a fictional small business.')">View learning path →</button></article>
+  <article class="card path skill-card" data-search="business entrepreneurship small business planning"><div class="icon">💼</div><span class="tag">BEGINNER · STARTER PATH</span><h3>Entrepreneurship</h3><p>Find a real problem, understand potential customers, and test an idea cheaply.</p><button class="btn" onclick="showSkillDetail('Entrepreneurship','1. List problems people face; 2. Talk to three potential users; 3. Sketch a solution; 4. Test a simple version and collect feedback.','Write a one-page plan for a small solution to a real problem.')">View learning path →</button></article>
+  <article class="card path skill-card" data-search="spreadsheets data excel budgeting records"><div class="icon">📊</div><span class="tag">BEGINNER · STARTER PATH</span><h3>Spreadsheets & Data</h3><p>Organize information, use simple formulas, and make a clear summary.</p><button class="btn" onclick="showSkillDetail('Spreadsheets & Data','1. Create a table; 2. Format headings; 3. Use SUM and AVERAGE; 4. Make a simple chart or summary.','Build a weekly budget or sales tracker using sample data.')">View learning path →</button></article>
+  <article class="card path skill-card" data-search="ui ux user experience interface app design"><div class="icon">📱</div><span class="tag">BEGINNER · STARTER PATH</span><h3>UI/UX Design</h3><p>Design app screens that are clear, accessible, and easy to use.</p><button class="btn" onclick="showSkillDetail('UI/UX Design','1. Pick one user problem; 2. Sketch the user journey; 3. Draw two screen layouts; 4. Ask someone to test the design.','Sketch a simple mobile app for a problem you understand.')">View learning path →</button></article>
+  <article class="card path skill-card" data-search="cyber safety digital literacy privacy passwords internet"><div class="icon">🔐</div><span class="tag">BEGINNER · STARTER PATH</span><h3>Digital Safety</h3><p>Learn safer passwords, scam awareness, privacy, and responsible online habits.</p><button class="btn" onclick="showSkillDetail('Digital Safety','1. Learn to spot suspicious messages; 2. Review privacy settings; 3. Create a password-safety checklist; 4. Practise verifying sources before sharing.','Make a digital-safety checklist for a family or student group.')">View learning path →</button></article>
+ </div>
+ <p id="noSkills" class="notice hidden">No matching skills yet. Try another search.</p>
+ <div id="skillDetail" class="card hidden" style="margin-top:18px" aria-live="polite"></div>
+</section>
+
+
+<section id="upgrades" class="section">
+ <div class="section-head"><div><span class="pill">ONE PLACE · ALL FEATURES</span><h2 style="margin-top:10px">🚀 SkillRise Learning & Upgrade Centre</h2><p>All the learning features and packages are gathered here. Choose a skill first, then choose how deeply you want to learn.</p></div></div>
+ <div class="grid">
+  <article class="card"><div class="icon">🆓</div><h3>Free learning</h3><p><strong>Short starter lessons</strong></p><p>Get a simple introduction, key points, a visual example, and a small practice task. This is a useful way to try a skill before choosing a longer class.</p><a href="#skills"><button class="btn secondary" type="button">Try a free skill →</button></a></article>
+  <article class="card"><div class="icon">🎓</div><h3>Premium guided classes</h3><p><strong>Longer, detailed teaching</strong></p><p>Premium lessons are designed to go beyond lists: explain the meaning of each important word, teach step by step, show examples and visual illustrations, cover tools needed, include practice tasks, and finish with a practical project. Lessons can take around 20 minutes or longer when the topic needs it.</p><a href="#payments"><button class="btn" type="button">See premium packages →</button></a></article>
+  <article class="card"><div class="icon">🎬</div><h3>Animation & voice</h3><p>Use the animated teacher, changing visual scenes, on-screen explanations, and spoken narration where your browser supports voice. Each skill should keep the teacher beside the lesson and show examples related to the selected skill.</p><a href="#academy"><button class="btn secondary" type="button">Open Animated Academy →</button></a></article>
+  <article class="card"><div class="icon">🧰</div><h3>Tools & materials</h3><p>Lessons explain what tools or materials are needed, what each one does, lower-cost alternatives when sensible, how to prepare, common beginner mistakes, and how to check the finished work.</p><a href="#skills"><button class="btn secondary" type="button">Choose a skill →</button></a></article>
+  <article class="card"><div class="icon">🗣️</div><h3>Ask SkillRise</h3><p>Ask about the topic, any confusing word, the lesson example, or what to do next. The prototype can read an answer aloud; its built-in answers are limited and it is not yet connected to a live AI service.</p><a href="#askSkillRise"><button class="btn secondary" type="button">Ask a question →</button></a></article>
+  <article class="card"><div class="icon">📈</div><h3>Projects & progress</h3><p>Practise what you learn, tick off lessons, follow your progress on this device, and create portfolio-style mini-projects that demonstrate your skills.</p><a href="#projects"><button class="btn secondary" type="button">View projects →</button></a></article>
+ </div>
+ <div class="card" style="margin-top:16px"><h3>How a full premium class is structured</h3><ol><li>Introduction: what the skill is and why it is useful.</li><li>Tools and materials: what you need and how to prepare.</li><li>Step-by-step teaching with clear explanations of key terms.</li><li>Visual examples, demonstrations, and common mistakes.</li><li>Guided practice with a task to try yourself.</li><li>Knowledge check, corrections, and a final practical project.</li><li>Recap and suggestions for what to learn next.</li></ol><p class="notice">The website is currently a prototype. Interactive lessons, browser narration, progress saved on this device, and visual demos work where supported. It does not yet provide a real streaming movie for every skill, live AI answers, accounts synced across devices, or automatic payment verification.</p></div>
+</section>
+
+<section id="academy" class="section">
+ <div class="section-head"><div><span class="pill">NEW · SKILLRISE 2.0</span><h2 style="margin-top:10px">🎬 Animated Academy</h2><p>Watch a concept come to life, read the explanation, then try it yourself.</p></div></div>
+ <div class="academy-layout">
+  <div class="animation-stage" aria-label="Animated graphic design lesson preview">
+   <span class="stage-label" id="academyStageLabel">ANIMATED EXPLAINER · COLOUR & CONTRAST</span>
+   <div class="animated-board" aria-hidden="true">
+    <div class="demo-poster" id="badPoster"><span>SALE TODAY</span><strong>BIG<br>DEALS</strong><span>Come and shop</span><i class="demo-swatch" style="background:#e7d7a5"></i><i class="demo-swatch" style="background:#f2e8cf"></i></div>
+    <div class="demo-arrow">➜</div>
+    <div class="demo-poster good" id="goodPoster"><span>SKILLRISE</span><strong>LEARN<br>NEW SKILLS</strong><span>Start today</span><i class="demo-swatch" style="background:#f4c542"></i><i class="demo-swatch" style="background:#182b38"></i></div>
+   </div>
+   <div><span class="tag">LESSON PREVIEW</span><p id="academyCaption" class="academy-caption" aria-live="polite">The first poster uses similar pale colours, so the words are hard to read. Strong contrast helps the message stand out.</p></div>
+  </div>
+  <div class="card">
+   <h3>Choose a learning format</h3><p>Our goal is a hybrid academy: animated explanations, clear written notes, visual examples, and real-life demonstrations where useful.</p>
+   <div class="academy-controls" role="group" aria-label="Choose lesson format"><button class="btn secondary" aria-pressed="true" onclick="setAcademyMode('animation',this)">✨ Animation</button><button class="btn secondary" aria-pressed="false" onclick="setAcademyMode('notes',this)">📖 Read notes</button><button class="btn secondary" aria-pressed="false" onclick="setAcademyMode('real',this)">🧑‍💻 Real-life example</button></div>
+   <div id="academyExplanation"><h4>What you will learn</h4><p>Colour contrast helps important words stand out. A designer should make sure the text is readable on a phone and that the colours support the message.</p></div>
+   <div class="notice">This version includes an animated interactive preview. Full narrated movie lessons can be added later as original video files or embedded videos; this demo does not pretend that a complete video library already exists.</div>
+  </div>
+ </div>
+ <div class="grid" style="margin-top:16px">
+  <article class="card"><div class="icon">🎨</div><h3>Creative skills</h3><p>Graphic design, illustration, UI/UX, photography, animation, and video editing.</p></article>
+  <article class="card"><div class="icon">💻</div><h3>Digital and technology</h3><p>Website development, programming basics, data analysis, digital marketing, and online safety.</p></article>
+  <article class="card"><div class="icon">💼</div><h3>Career and business</h3><p>Entrepreneurship, budgeting, communication, CV writing, interview practice, and project planning.</p></article>
+ </div>
+</section>
+<section id="quickquiz" class="section">
+ <div class="section-head"><div><h2>🧠 Quick knowledge check</h2><p>Try a short question after exploring the animated lesson.</p></div></div>
+ <div class="card"><strong>Why is strong colour contrast useful in a design?</strong><div class="quiz-options"><button class="btn secondary" onclick="answerAcademyQuiz(false)">A. It makes every element look the same</button><button class="btn secondary" onclick="answerAcademyQuiz(true)">B. It helps important text stand out and stay readable</button><button class="btn secondary" onclick="answerAcademyQuiz(false)">C. It means a design needs no words</button></div><p id="academyQuizFeedback" aria-live="polite" class="tag"></p></div>
+</section>
+<section id="dashboard" class="section">
+ <div class="section-head"><div><h2>📈 My learning dashboard</h2><p>Your progress and achievements are saved in this browser on this device.</p></div></div>
+ <div class="card"><div class="dashboard-stats"><div class="dashboard-stat"><span>Lessons completed</span><strong id="dashLessons">0</strong></div><div class="dashboard-stat"><span>Knowledge checks passed</span><strong id="dashQuizzes">0</strong></div><div class="dashboard-stat"><span>Academy activities</span><strong id="dashActivities">0</strong></div></div><h3 style="margin-top:20px">My achievements</h3><div class="badge-row" id="achievementBadges"><span class="badge">🌱 First Step — unlock by completing a lesson</span><span class="badge">🧠 Quick Thinker — unlock by passing a quiz</span></div><p class="notice" style="margin-top:16px">Progress currently stays on this device. A future online account system would be needed to sync progress between phones or share it with an instructor.</p></div>
+</section>
+
+<section id="graphicNotes" class="section hidden">
+ <div class="section-head"><div><span class="pill">SKILLPATH LEARNING NOTES</span><h2>🎨 Graphic Design: Beginner's Guide</h2><p>Read the notes, study the illustrations, then try the mini exercises.</p></div></div>
+ <article class="card" style="margin-bottom:16px">
+  <h3>Lesson 1: What is graphic design?</h3>
+  <p>Graphic design is the use of <strong>text, images, colours, and shapes</strong> to communicate a message visually. You see it on posters, book covers, logos, adverts, product packaging, and social media posts.</p>
+  <p>A good design is not just beautiful. It should help people understand the message quickly.</p>
+  <svg viewBox="0 0 600 230" class="lesson-illustration" role="img" aria-label="Illustration of a sample event poster"><rect x="20" y="12" width="560" height="206" rx="12" fill="#202020" stroke="#5a4a1d"/><rect x="38" y="28" width="245" height="175" rx="8" fill="#f4c542"/><circle cx="226" cy="60" r="22" fill="#111"/><path d="M52 154 L110 92 L149 132 L184 102 L266 180 L52 180Z" fill="#111"/><text x="52" y="55" font-size="12" font-weight="bold" fill="#111">COMMUNITY EVENT</text><text x="52" y="82" font-size="22" font-weight="bold" fill="#111">Creative Day</text><text x="52" y="196" font-size="11" fill="#111">SATURDAY · 10 AM</text><text x="310" y="50" font-size="16" font-weight="bold" fill="#f4c542">Design uses:</text><rect x="310" y="67" width="22" height="22" rx="4" fill="#f4c542"/><text x="345" y="83" font-size="15" fill="#fff">Colour</text><rect x="310" y="101" width="22" height="22" rx="4" fill="#ddd"/><text x="345" y="117" font-size="15" fill="#fff">Text</text><circle cx="321" cy="146" r="11" fill="#8b72c9"/><text x="345" y="151" font-size="15" fill="#fff">Shapes and images</text><text x="310" y="187" font-size="12" fill="#bbb">All parts work together</text></svg>
+  <div class="example-note"><strong>Example:</strong> On an event poster, the event name should be easy to notice first. The date and location should also be easy to find. Decoration should never hide important information.</div>
+  <h4>Try it</h4><p>Think of a poster you have seen. What was its main message? Which words were largest? What picture or shape did it use?</p>
+ </article>
+ <article class="card" style="margin-bottom:16px">
+  <h3>Lesson 2: Layout and visual hierarchy</h3>
+  <p><strong>Layout</strong> is how text and images are arranged. <strong>Visual hierarchy</strong> is the order in which people notice things. Usually, the main title should stand out first, followed by supporting information, then smaller details.</p>
+  <svg viewBox="0 0 600 230" class="lesson-illustration" role="img" aria-label="Comparison of clear and cluttered layout"><rect x="20" y="12" width="270" height="205" rx="10" fill="#242424" stroke="#555"/><text x="38" y="38" font-size="13" fill="#f4c542">CLEAR HIERARCHY</text><rect x="38" y="52" width="234" height="54" rx="6" fill="#f4c542"/><text x="155" y="85" text-anchor="middle" font-size="20" font-weight="bold" fill="#111">MAIN TITLE</text><rect x="38" y="119" width="170" height="8" rx="4" fill="#ddd"/><rect x="38" y="136" width="210" height="8" rx="4" fill="#888"/><rect x="38" y="157" width="95" height="27" rx="5" fill="#6c59a5"/><text x="85" y="175" text-anchor="middle" font-size="11" fill="#fff">DETAILS</text><rect x="310" y="12" width="270" height="205" rx="10" fill="#242424" stroke="#555"/><text x="328" y="38" font-size="13" fill="#f4c542">CLUTTERED LAYOUT</text><rect x="353" y="52" width="180" height="20" rx="4" fill="#ddd"/><rect x="327" y="82" width="220" height="8" rx="4" fill="#888"/><rect x="375" y="99" width="160" height="8" rx="4" fill="#888"/><rect x="330" y="122" width="105" height="28" rx="5" fill="#6c59a5"/><rect x="461" y="161" width="92" height="8" rx="4" fill="#ddd"/><text x="155" y="202" text-anchor="middle" font-size="11" fill="#bbb">Easy to scan</text><text x="445" y="202" text-anchor="middle" font-size="11" fill="#bbb">Harder to follow</text></svg>
+  <p><strong>Three useful rules:</strong> align related items, leave space between sections, and make the most important information stand out.</p>
+  <div class="example-note"><strong>Example:</strong> For a school-club flyer, use a large title at the top, put the date and place underneath, and finish with a clear instruction such as “Join us”.</div>
+  <h4>Try it</h4><p>Sketch a flyer with one large title, two lines of details, and one clear action.</p>
+ </article>
+ <article class="card" style="margin-bottom:16px">
+  <h3>Lesson 3: Colour and contrast</h3>
+  <p>Colour can set a mood, group related information, and attract attention. <strong>Contrast</strong> means there is enough difference between text and its background for the text to be easy to read.</p>
+  <svg viewBox="0 0 600 190" class="lesson-illustration" role="img" aria-label="Examples of readable and low contrast text"><rect x="20" y="15" width="560" height="160" rx="12" fill="#202020" stroke="#555"/><text x="40" y="43" font-size="13" fill="#f4c542">GOOD CONTRAST</text><rect x="40" y="55" width="520" height="40" rx="7" fill="#f4c542"/><text x="300" y="81" text-anchor="middle" font-size="18" font-weight="bold" fill="#111">Easy to read</text><text x="40" y="120" font-size="13" fill="#f4c542">LOW CONTRAST</text><rect x="40" y="132" width="520" height="28" rx="7" fill="#d8cc9a"/><text x="300" y="151" text-anchor="middle" font-size="16" fill="#c9bd8d">Hard to read</text></svg>
+  <p>Dark text on a light background, or light text on a dark background, often works well. Do not rely on colour alone to explain something; labels and symbols can help too.</p>
+  <div class="example-note"><strong>Example:</strong> Black text on a pale yellow background is usually easier to read than pale yellow text on white.</div>
+  <h4>Try it</h4><p>Choose a background colour and a text colour for a pretend flyer. Check whether someone else can read it easily.</p>
+ </article>
+ <article class="card" style="margin-bottom:16px">
+  <h3>Lesson 4: Typography</h3>
+  <p><strong>Typography</strong> is the way text is chosen and arranged. Use readable fonts, make headings larger than body text, and avoid using too many different font styles.</p>
+  <svg viewBox="0 0 600 200" class="lesson-illustration" role="img" aria-label="Example of title, subheading, and body text hierarchy"><rect x="20" y="12" width="560" height="176" rx="12" fill="#202020" stroke="#555"/><text x="42" y="39" font-size="12" fill="#f4c542">TITLE · LARGE</text><text x="42" y="72" font-size="28" font-weight="bold" fill="#fff">Learn Something New</text><text x="42" y="101" font-size="18" font-weight="bold" fill="#f4c542">A supporting subheading</text><text x="42" y="128" font-size="14" fill="#ddd">Body text explains the details in a readable style.</text><text x="42" y="149" font-size="14" fill="#ddd">Keep the words comfortable to read.</text><rect x="42" y="161" width="140" height="18" rx="5" fill="#6c59a5"/><text x="112" y="174" text-anchor="middle" font-size="10" fill="#fff">NEXT STEP</text></svg>
+  <div class="example-note"><strong>Example:</strong> For a tutoring flyer, make “Tutoring Classes” the main heading, the subjects a smaller subheading, and the schedule body text.</div>
+  <h4>Try it</h4><p>Write a headline, a subheading, and two sentences describing an imaginary event.</p>
+ </article>
+ <article class="card">
+  <h3>Lesson 5: Images, spacing, and your first project</h3>
+  <p>Images should support the message, not distract from it. Spacing is the empty area between elements; it gives the content room to breathe. Use original images or images you have permission to use.</p>
+  <div class="example-note"><strong>Your project:</strong> Create a flyer for an imaginary event or small business. Include a clear title, a short description, a date or useful detail, readable colours, and one relevant picture or illustration.</div>
+  <h4>Final checklist</h4><ul><li>Can someone understand the message in five seconds?</li><li>Is the text easy to read on a phone?</li><li>Are the date and details accurate?</li><li>Did you check spelling?</li><li>Are the images yours or permitted for use?</li></ul>
+  <button class="btn" onclick="markGraphicComplete()">✓ Mark Graphic Design notes complete</button>
+  <p id="graphicDone" class="tag" aria-live="polite"></p>
+ </article>
+</section>
+
+<section id="path" class="section">
+ <div class="section-head"><div><h2 id="pathTitle">Your learning path: Website Development</h2><p id="pathSubtitle">Tick each lesson when you've completed it. Your progress saves on this device.</p></div></div>
+ <div class="card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><strong id="progressText">0 of 6 lessons completed</strong><span class="tag" id="progressPercent">0%</span></div><div class="progress-wrap"><div class="progress" id="progressBar"></div></div><div id="lessonList" class="lesson-list"></div><div id="lessonReader" class="lesson-reader hidden" aria-live="polite"></div><div class="notice" id="pathTip">Tip: tap a lesson title to read the explanation, see an example, and try a short practice question.</div></div>
+</section>
+<section id="projects" class="section">
+ <div class="section-head"><div><h2>Build your first project</h2><p>Learning becomes more useful when you make something.</p></div></div>
+ <div class="grid">
+  <article class="card"><div class="icon">🌐</div><h3>Personal webpage</h3><p>Create a page that introduces you and shows something you've learned.</p><span class="tag">PROJECT 01 · STARTER</span></article>
+  <article class="card"><div class="icon">🧾</div><h3>Business flyer concept</h3><p>Design a simple promotional flyer for an imaginary small business.</p><span class="tag">PROJECT 02 · CREATIVE</span></article>
+  <article class="card"><div class="icon">📝</div><h3>Product description</h3><p>Write a clear, helpful description for a product you choose.</p><span class="tag">PROJECT 03 · WRITING</span></article>
+ </div>
+</section>
+
+<section id="payments" class="section">
+ <div class="section-head"><div><h2>SkillRise Premium Payments</h2><p>Choose a supported bank or wallet to pay for eligible premium classes.</p></div></div>
+ <div class="grid" style="margin-bottom:16px">
+  <article class="card"><div class="icon">⭐</div><h3>Normal Premium Class</h3><p><strong style="font-size:1.4rem;color:var(--gold)">₦500</strong></p><p>Entry premium access for a class, with a fuller explanation than the free starter lesson. Confirm the exact class access before paying.</p><button class="btn" type="button" onclick="selectPackage('Normal Premium Class — ₦500')">Choose this package</button></article>
+  <article class="card"><div class="icon">📚</div><h3>Choose 5 skills</h3><p><strong style="font-size:1.4rem;color:var(--gold)">₦1,250</strong></p><p>Premium learning package for five selected skills.</p><button class="btn" type="button" onclick="selectPackage('5 skills package — ₦1,250')">Choose this package</button></article>
+  <article class="card"><div class="icon">🚀</div><h3>Choose 7 skills</h3><p><strong style="font-size:1.4rem;color:var(--gold)">₦1,500</strong></p><p>Premium learning package for seven selected skills.</p><button class="btn" type="button" onclick="selectPackage('7 skills package — ₦1,500')">Choose this package</button></article>
+  <article class="card"><div class="icon">🏆</div><h3>All skills · Full package</h3><p><strong style="font-size:1.4rem;color:var(--gold)">₦2,000</strong></p><p>Choose the full package for access to all listed skill paths and the premium learning experience.</p><button class="btn" type="button" onclick="selectPackage('All skills full package — ₦2,000')">Choose full package</button></article>
+ </div>
+ <p id="packageChoice" class="notice" aria-live="polite">Choose a package to continue to payment and receipt submission.</p>
+ <div id="paymentSubmission" class="card" style="margin:16px 0;scroll-margin-top:20px"><h3>Complete your premium order</h3><p>1. Choose a package. 2. Transfer the exact amount using the confirmed account details. 3. Fill this form and attach your receipt. Access codes are issued only after manual payment verification.</p>
+ <form id="premiumOrderForm" class="contact" onsubmit="submitPremiumOrder(event)">
+ <label for="premiumPackage">Selected package</label><input id="premiumPackage" required readonly placeholder="Choose a package above"><input id="premiumPackageId" type="hidden" value="">
+ <label for="premiumEmail">Email address (needed for online checkout)</label><input id="premiumEmail" type="email" maxlength="254" autocomplete="email" placeholder="you@example.com">
+ <label for="premiumName">Your name</label><input id="premiumName" required maxlength="80" autocomplete="name" placeholder="Name used for your order">
+ <label for="premiumPhone">Phone number for access-code delivery</label><input id="premiumPhone" required type="tel" maxlength="25" autocomplete="tel" placeholder="e.g. 080…">
+ <label for="premiumSkills">Skills requested (for 5/7-skill packages)</label><input id="premiumSkills" maxlength="300" placeholder="List your selected skills">
+ <label for="premiumReference">Transfer reference / transaction ID</label><input id="premiumReference" required maxlength="100" placeholder="Transfer reference">
+ <label for="premiumReceipt">Upload receipt (image or PDF)</label><input id="premiumReceipt" required type="file" accept="image/*,.pdf">
+ <p class="assistant-note">Never upload or share your PIN, password, card details, or OTP.</p><div class="voice-tools"><button class="btn" type="button" onclick="startPaystackPayment()">Pay online with Paystack</button><button class="btn secondary" type="submit">Submit bank-transfer receipt for review</button></div></form>
+ <div id="premiumOrderResult" class="notice hidden" aria-live="polite"></div><button id="copyOrderButton" class="btn secondary hidden" type="button" onclick="copyPremiumOrder()">Copy order details</button>
+ <p class="assistant-note">Connection status: these payment buttons require the SkillRise backend to be deployed and configured. When opened as a local HTML file, they cannot verify payments or send receipts. Do not pay until SkillRise provides its official hosted checkout and confirmed payment details.</p></div>
+ <div class="grid">
+  <article class="card"><div class="icon">🇳🇬</div><h3>Supported Nigerian banks & wallets</h3><p>Opay · PalmPay · GTBank · Zenith Bank · other approved Nigerian banks.</p><p>For now, make a bank transfer using the account details below. Select your own bank or wallet app to send the transfer.</p></article>
+  <article class="card"><div class="icon">🌍</div><h3>International payments</h3><p>We may support selected legitimate foreign banks. Please contact SkillRise first for confirmed receiving details and any transfer fees. Do not send foreign transfers to the Nigerian account unless your bank confirms it will work.</p></article>
+  <article class="card"><div class="icon">⭐</div><h3>Premium class fee</h3><p><strong style="color:var(--gold);font-size:1.4rem">From ₦500</strong></p><p>The fee depends on the class. Check the exact amount before paying. Do not pay extra unless the displayed price says so.</p></article>
+ </div>
+ <div class="card" style="margin-top:16px">
+  <h3>Bank transfer details</h3>
+  <p><strong>Account number:</strong> <span style="font-size:1.15rem;letter-spacing:1px">8120175626</span></p>
+  <p><strong>Account name:</strong> Judith Chiwenwa</p>
+  <p><strong>Bank:</strong> Please confirm the bank name with the account holder before transferring.</p>
+  <div class="notice">Important: This demo cannot process or automatically verify payments. Confirm the account name and bank inside your payment app before sending money. Keep your receipt, and never share your PIN, password, or OTP. Premium access must be confirmed manually by the SkillRise team.</div>
+  <p style="margin-top:14px">After paying, contact the SkillRise team with the class name, amount, and transaction reference. Do not post your receipt or private banking details publicly.</p>
+ </div>
+</section>
+
+<section id="about" class="section hidden"><div class="card"><h2>About SkillRise</h2><p>SkillRise is an early prototype for a learning platform focused on practical skills, guided learning, projects, and opportunities to use what you learn.</p><p><strong>Our promise:</strong> Learn It. Build It. Use It.</p><p>This first version is a demo. It doesn't yet have user accounts, online syncing, or a live job marketplace.</p></div></section>
+<section id="askSkillRise" class="section"><div class="assistant-box"><span class="pill">SKILLRISE LEARNING ASSISTANT</span><h2 style="margin-top:12px">Ask a question 🎙️</h2><p>Ask about the lesson, a skill, a word you do not understand, or what to do next. SkillRise will explain in simple steps and can read the answer aloud.</p><form onsubmit="askSkillRise(event)"><label for="learnerQuestion">Your question</label><textarea id="learnerQuestion" rows="3" maxlength="800" required placeholder="Example: What is HTML, and why do I need it?"></textarea><div class="voice-tools"><button class="btn" type="submit">Ask SkillRise</button><button class="btn secondary" type="button" onclick="startVoiceQuestion()">🎙️ Speak question</button><button class="btn secondary" type="button" onclick="readAssistantAnswer()">🔊 Read answer aloud</button><button class="btn secondary" type="button" onclick="stopSkillRiseVoice()">■ Stop voice</button></div></form><div id="assistantAnswer" class="assistant-answer" aria-live="polite">Hi learner! Type or speak a question and I will help explain it.</div><p id="voiceStatus" class="assistant-note">Voice features depend on the browser and device. Speech recognition may require internet permission.</p><p class="assistant-note">Prototype note: this version answers using the included lessons and built-in explanations. It is not yet connected to a live AI service, so it may not know every possible question.</p></div></section>
+<section class="section"><div class="card"><h2>Help us improve SkillRise</h2><p>What skill would you like us to add next?</p><form class="contact" onsubmit="sendFeedback(event)"><input id="feedback" required maxlength="180" placeholder="Type a skill or idea…"><button class="btn" type="submit">Save idea</button></form><p id="feedbackResult" class="tag" aria-live="polite"></p></div></section>
+</main>
+<footer><div class="wrap">© <span id="year"></span> SkillRise · Learn It. Build It. Use It. <br><span>This is an early demo. Online payments are not integrated; progress and feedback are saved only in this browser on this device.</span></div></footer>
+<div id="toast" class="toast" role="status"></div>
+<script>
+const paths={
+ web:{title:"Your learning path: Website Development",lessons:["What is a website?","HTML: add headings and paragraphs","HTML: add links and images","CSS: style colours and text","CSS: make the page work on phones","Build a personal webpage"],tip:"Free practice: W3Schools Tryit Editor or freeCodeCamp. Your first project is a personal webpage."},
+ design:{title:"Your learning path: Graphic Design",lessons:["What makes a design easy to understand?","Explore colour and contrast","Practise typography and spacing","Create a promotional design"],tip:"Use a free design tool and create original work. Your first project is a flyer for a fictional business."},
+ writing:{title:"Your learning path: Content Writing",lessons:["Write for a clear audience","Make a useful social caption","Describe a product clearly","Edit and proofread your writing"],tip:"Build a small portfolio of original samples. Your first project is a caption and product description."}
+};
+let current=localStorage.getItem("spPath")||"web";
+function renderPath(){
+ const p=paths[current];document.getElementById("pathTitle").textContent=p.title;document.getElementById("pathTip").textContent=p.tip;
+ const list=document.getElementById("lessonList");list.innerHTML="";
+ p.lessons.forEach((lesson,i)=>{const key=`sp-${current}-${i}`;const done=localStorage.getItem(key)==="1";const row=document.createElement("div");row.className="lesson";const cb=document.createElement("input");cb.type="checkbox";cb.id=key;cb.checked=done;cb.addEventListener("change",()=>{localStorage.setItem(key,cb.checked?"1":"0");updateProgress()});const label=document.createElement("label");label.htmlFor=key;label.textContent=`${i+1}. ${lesson}`;label.addEventListener("click",(ev)=>{ev.preventDefault();openLesson(current,i)});row.addEventListener("click",(ev)=>{if(ev.target!==cb&&ev.target!==label)openLesson(current,i)});const small=document.createElement("small");small.textContent=done?"Completed":"Read lesson";row.append(cb,label,small);list.append(row)});updateProgress()
+}
+function updateProgress(){const total=paths[current].lessons.length;let done=0;paths[current].lessons.forEach((_,i)=>{if(localStorage.getItem(`sp-${current}-${i}`)==="1")done++});const pct=Math.round(done/total*100);document.getElementById("progressText").textContent=`${done} of ${total} lessons completed`;document.getElementById("progressPercent").textContent=pct+"%";document.getElementById("progressBar").style.width=pct+"%";document.querySelectorAll(".lesson").forEach((r,i)=>{r.querySelector("small").textContent=localStorage.getItem(`sp-${current}-${i}`)==="1"?"Completed":"Lesson"})}
+function scrollToLearningTarget(element){
+ if(!element) return;
+ element.classList.remove("hidden");
+ const go=()=>{
+   const top=element.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 88;
+   try{window.scrollTo({top:Math.max(0,top),behavior:"smooth"});}catch(e){window.scrollTo(0,Math.max(0,top));}
+ };
+ requestAnimationFrame(()=>requestAnimationFrame(go));
+}
+function choosePath(id){
+ if(!paths[id]){
+   const button=document.querySelector('.skill-card button[onclick*="'+id+'"]');
+   if(button) button.click();
+   else showSkillDetail("Learning path","Start with the basics, study the example, practise one step, and review what you learned.","Create one small project that demonstrates this skill.");
+   return;
+ }
+ current=id;
+ try{localStorage.setItem("spPath",id);}catch(e){}
+ renderPath();
+ const pathSection=document.getElementById("path");
+ if(id==="design"){
+   const notes=document.getElementById("graphicNotes");
+   if(notes){scrollToLearningTarget(notes);}
+   else scrollToLearningTarget(pathSection);
+ }else{
+   scrollToLearningTarget(pathSection);
+   if(lessonContent[id] && lessonContent[id].length){setTimeout(()=>openLesson(id,0),450);}
+ }
+ toast("Learning path opened!");
+}
+function markGraphicComplete(){localStorage.setItem("sp-graphic-notes-complete","1");document.getElementById("graphicDone").textContent="Great work! Your Graphic Design notes are marked complete on this device."}
+
+const lessonContent={
+ web:[
+  {title:"What is a website?",body:"A website is a collection of pages you can open in a browser, such as Chrome. Websites can teach, entertain, sell products, or help people complete tasks. SkillRise itself is a website.",section:"Think of a website like a shop",example:"A shop has a sign, shelves, and items. A website has a page title, sections, and content. The browser displays the page for the visitor.",svg:`<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" class="lesson-illustration"><rect x="22" y="20" width="556" height="180" rx="14" fill="#202020" stroke="#625222"/><rect x="22" y="20" width="556" height="35" rx="14" fill="#302a1a"/><circle cx="42" cy="37" r="5" fill="#f4c542"/><circle cx="59" cy="37" r="5" fill="#888"/><circle cx="76" cy="37" r="5" fill="#888"/><rect x="42" y="72" width="145" height="104" rx="8" fill="#3b321c"/><text x="114" y="118" text-anchor="middle" font-size="25" fill="#f4c542">🌐</text><text x="114" y="146" text-anchor="middle" font-size="13" fill="#fff">Website page</text><rect x="210" y="75" width="320" height="15" rx="5" fill="#f4c542"/><rect x="210" y="101" width="260" height="9" rx="4" fill="#999"/><rect x="210" y="119" width="290" height="9" rx="4" fill="#777"/><rect x="210" y="145" width="105" height="24" rx="7" fill="#f4c542"/><text x="262" y="161" text-anchor="middle" font-size="11" fill="#111">Click here</text></svg>`,task:"Name one website you have visited and write down what it helps people do.",question:"Which app usually displays a website?",options:["A web browser, such as Chrome","A calculator only","A phone torch"],answer:0,explain:"Correct! A browser requests and displays websites."},
+  {title:"HTML: headings and paragraphs",body:"HTML means HyperText Markup Language. It gives a webpage its structure. Think of it as the frame of a house. HTML uses elements, usually written with an opening tag and a closing tag.",section:"Your first HTML example",code:"<h1>Welcome to SkillRise</h1>\\n<p>Learn a useful skill one step at a time.</p>",example:"The <h1> tag creates a main heading. The <p> tag creates a paragraph. The text between the tags is what visitors read.",svg:`<svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg" class="lesson-illustration"><rect x="20" y="20" width="560" height="140" rx="12" fill="#202020" stroke="#444"/><text x="45" y="55" font-size="13" fill="#f4c542">HTML in the browser</text><text x="45" y="91" font-size="25" font-weight="bold" fill="#fff">Welcome to SkillRise</text><text x="45" y="121" font-size="15" fill="#d4d4d4">Learn a useful skill one step at a time.</text></svg>`,task:"Change the heading to your own name and write a paragraph about a skill you want to learn.",question:"Which HTML tag is used for a paragraph?",options:["<p>","<head>","<button>"],answer:0,explain:"Correct! The p tag marks a paragraph."},
+  {title:"HTML: links and images",body:"Links let visitors move to another page or website. Images help explain ideas visually. A link uses the <a> tag, and an image uses the <img> tag. The href attribute tells a link where to go; the src attribute tells an image where its file is.",section:"Examples",code:`<a href="https://example.com">Visit this example</a>\n\n<img src="photo.jpg" alt="A notebook on a desk">`,example:"The alt text describes an image if it cannot load and helps people using screen readers. Use images you created, have permission to use, or that have a suitable licence.",svg:`<svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg" class="lesson-illustration"><rect x="25" y="25" width="250" height="130" rx="10" fill="#242424" stroke="#555"/><text x="45" y="58" font-size="14" fill="#f4c542">LINK</text><text x="45" y="88" font-size="17" fill="#fff" text-decoration="underline">Open another page ↗</text><rect x="315" y="25" width="260" height="130" rx="10" fill="#242424" stroke="#555"/><rect x="337" y="45" width="90" height="75" rx="6" fill="#50421b"/><circle cx="382" cy="68" r="12" fill="#f4c542"/><path d="M344 111 L368 83 L388 104 L404 89 L420 111Z" fill="#d8b34a"/><text x="440" y="82" font-size="14" fill="#fff">Image</text><text x="440" y="102" font-size="11" fill="#bbb">with alt text</text></svg>`,task:"Write a link label that would take a visitor to a learning resource.",question:"Which attribute tells an image what text to show if it cannot be seen?",options:["alt","href","colour"],answer:0,explain:"Correct! The alt attribute provides a text alternative for the image."},
+  {title:"CSS: style colours and text",body:"CSS means Cascading Style Sheets. It controls how a webpage looks: colours, spacing, fonts, borders, and layout. HTML provides the structure; CSS styles it.",section:"A simple CSS example",code:"h1 {\\n  color: #f4c542;\\n  font-size: 32px;\\n}\\n\\np {\\n  color: #dddddd;\\n}",example:"The selector h1 chooses the headings. The declarations inside the braces tell the browser to make the heading gold and 32 pixels tall.",svg:`<svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg" class="lesson-illustration"><rect x="20" y="20" width="560" height="140" rx="12" fill="#171717" stroke="#444"/><text x="45" y="52" font-size="13" fill="#aaa">Before styling</text><text x="45" y="78" font-size="20" fill="#fff">Hello, learner!</text><path d="M270 92 L320 92" stroke="#f4c542" stroke-width="3"/><path d="M310 82 L322 92 L310 102" fill="none" stroke="#f4c542" stroke-width="3"/><text x="350" y="52" font-size="13" fill="#f4c542">After CSS</text><text x="350" y="84" font-size="24" font-weight="bold" fill="#f4c542">Hello, learner!</text><text x="350" y="110" font-size="13" fill="#ddd">Gold, bold, larger</text></svg>`,task:"Pick a colour and imagine how you would style your main heading.",question:"What does CSS mainly control?",options:["The appearance and layout of a page","The phone battery","The internet password"],answer:0,explain:"Correct! CSS controls visual style and layout."},
+  {title:"Make a website work on phones",body:"A responsive website adjusts to different screen sizes. This matters because people use phones, tablets, and computers. Use flexible widths, readable text, and enough space around buttons.",section:"A responsive layout example",code:"img {\\n  max-width: 100%;\\n  height: auto;\\n}\\n\\n@media (max-width: 600px) {\\n  .columns { display: block; }\\n}",example:"max-width: 100% helps an image fit inside its container. The media query changes the layout when the screen is narrow.",svg:`<svg viewBox="0 0 600 205" xmlns="http://www.w3.org/2000/svg" class="lesson-illustration"><rect x="35" y="22" width="310" height="160" rx="8" fill="#222" stroke="#f4c542" stroke-width="2"/><rect x="49" y="39" width="282" height="25" rx="4" fill="#f4c542"/><rect x="49" y="75" width="125" height="88" rx="5" fill="#4b3d19"/><rect x="185" y="75" width="146" height="10" rx="4" fill="#aaa"/><rect x="185" y="94" width="120" height="8" rx="4" fill="#777"/><rect x="185" y="114" width="140" height="8" rx="4" fill="#777"/><rect x="390" y="20" width="105" height="170" rx="15" fill="#090909" stroke="#f4c542" stroke-width="2"/><rect x="400" y="42" width="85" height="130" rx="5" fill="#222"/><rect x="407" y="50" width="71" height="18" rx="3" fill="#f4c542"/><rect x="407" y="76" width="71" height="40" rx="3" fill="#4b3d19"/><rect x="407" y="123" width="71" height="7" rx="3" fill="#aaa"/><rect x="407" y="137" width="60" height="7" rx="3" fill="#777"/><text x="190" y="199" text-anchor="middle" font-size="12" fill="#ddd">Computer</text><text x="443" y="202" text-anchor="middle" font-size="12" fill="#ddd">Phone</text></svg>`,task:"Check a website on your phone. Are the words easy to read and buttons easy to tap?",question:"Why make a website responsive?",options:["So it adapts to different screen sizes","So it only works on computers","So it uses more battery"],answer:0,explain:"Correct! Responsive design helps the layout fit phones, tablets, and computers."},
+  {title:"Build a personal webpage",body:"Now combine what you've learned into a small project. A personal webpage can introduce you, list a skill you're learning, and show a project. Do not publish private details such as your home address, phone number, or school timetable.",section:"Starter page example",code:"<h1>Hello, I'm a learner!</h1>\\n<p>I'm learning website development.</p>\\n<h2>My first goal</h2>\\n<p>Build a useful webpage and improve it each week.</p>\\n<a href=\"https://www.freecodecamp.org/\">Find learning resources</a>",example:"Start simple. Make the page readable, add one helpful link, and test it on your phone. You can add CSS after the structure works.",svg:`<svg viewBox="0 0 600 190" xmlns="http://www.w3.org/2000/svg" class="lesson-illustration"><rect x="45" y="18" width="510" height="154" rx="12" fill="#202020" stroke="#555"/><circle cx="86" cy="64" r="22" fill="#51421a"/><text x="86" y="72" text-anchor="middle" font-size="23" fill="#f4c542">★</text><text x="124" y="57" font-size="20" font-weight="bold" fill="#f4c542">Hello, I'm a learner!</text><text x="124" y="80" font-size="13" fill="#ddd">I'm learning website development.</text><rect x="75" y="105" width="450" height="1" fill="#444"/><text x="75" y="130" font-size="14" font-weight="bold" fill="#fff">My first goal</text><text x="75" y="151" font-size="12" fill="#bbb">Build a useful webpage and improve it each week.</text></svg>`,task:"Write your own heading, a paragraph, and one learning goal. Then tick this lesson as complete.",question:"What should you do after building your first webpage?",options:["Test it and improve it","Assume it is perfect without checking","Add private information publicly"],answer:0,explain:"Correct! Testing helps you spot issues and make your project better."}
+ ],
+ design:[
+  {title:"What makes a design clear?",body:"Good design helps people understand a message quickly. Before decorating, decide who the design is for and what you want them to notice first.",section:"Example",example:"For a school event flyer, make the event name, date, and location easy to find. Decorative elements should not hide important information.",task:"Choose a topic for a flyer and list the three most important details.",question:"What should a design do first?",options:["Communicate its message clearly","Use every colour","Fill every empty space"],answer:0,explain:"Clear communication comes before decoration."},
+  {title:"Colour and contrast",body:"Contrast helps text stand out from its background. Use colours that are easy to distinguish, and avoid placing pale text on a pale background.",section:"Example",example:"Dark text on a light background or light text on a dark background is often easier to read than two similar shades.",task:"Choose a background colour and a text colour that are easy to read together.",question:"Why is contrast useful?",options:["It makes content easier to read","It makes all text smaller","It hides the message"],answer:0,explain:"Contrast helps people distinguish text and important elements."},
+  {title:"Typography and spacing",body:"Typography means how text is presented. Use a small number of readable fonts, clear headings, and enough space between sections.",section:"Example",example:"Use a large heading, medium subheading, and comfortable body text. Leave margins so the design doesn't feel crowded.",task:"Create a title and two short sections with clear spacing.",question:"What usually improves readability?",options:["Clear text hierarchy and spacing","Tiny text everywhere","Many different fonts"],answer:0,explain:"A clear hierarchy and spacing help readers scan information."},
+  {title:"Create a promotional design",body:"Combine audience, message, contrast, typography, and spacing to create a simple flyer. Check every detail before sharing.",section:"Project example",example:"Create a fictional tutoring flyer with a service name, what it offers, a date or availability, and a clear next step. Use only contact details you have permission to publish.",task:"Make a simple original flyer and ask someone whether they can understand it in five seconds.",question:"What is a good final step?",options:["Check spelling and ask for feedback","Publish without checking","Copy another person's design"],answer:0,explain:"Proofreading and feedback help improve the result."}
+ ],
+ writing:[
+  {title:"Write for a clear audience",body:"Before writing, decide who will read it and what they need to know. Use words your audience understands and focus on one main purpose.",section:"Example",example:"Instead of 'Our product has multiple advantageous characteristics,' write 'This notebook has thick pages and a pocket for notes.'",task:"Choose a product and describe it in one clear sentence.",question:"What should you identify before writing?",options:["Your audience and purpose","A random long word","The font colour only"],answer:0,explain:"Knowing the audience and purpose helps you choose useful information."},
+  {title:"Make a useful social caption",body:"A caption should quickly explain what the post is about. Keep it clear, accurate, and suited to the audience. A call to action tells readers what they can do next.",section:"Example",example:"'Need help organizing your week? Try this simple weekly planner. Save this post to use it later.'",task:"Write a caption for a useful item or service.",question:"What does a call to action do?",options:["Suggests a next step to the reader","Makes the caption confusing","Replaces all useful details"],answer:0,explain:"A call to action invites a clear next step."},
+  {title:"Describe a product clearly",body:"A good product description explains what the product is, who it helps, and its useful features. Be honest and don't make claims you cannot prove.",section:"Example",example:"'A lightweight A5 notebook with 120 lined pages for class notes, journaling, or planning.'",task:"Write two honest sentences describing a product you know.",question:"Which is better?",options:["A specific, honest description","An exaggerated claim with no proof","A description with no details"],answer:0,explain:"Specific, accurate details help people decide whether the product suits them."},
+  {title:"Edit and proofread",body:"Editing improves clarity and structure. Proofreading checks spelling, punctuation, names, and details. Reading your writing aloud can help you notice awkward sentences.",section:"Example",example:"First draft: 'this planner help you plan your week'\\nEdited: 'This planner helps you plan your week.'",task:"Write a short paragraph, then check capitals, punctuation, and whether every sentence is clear.",question:"What does proofreading mainly check?",options:["Errors such as spelling and punctuation","The price of the phone","Internet speed"],answer:0,explain:"Proofreading checks the small errors that can distract readers."}
+ ]
+};
+let openLessonIndex=0;
+function openLesson(pathId,index){
+ const lessons=lessonContent[pathId];
+ if(!lessons){showSkillDetail(paths[pathId]?.title||"Learning path","1. Read the introduction; 2. Practise the example; 3. Complete the project; 4. Review what you learned.","Create a small project that demonstrates this skill.");return;}
+ openLessonIndex=index;
+ const l=lessons[index];const box=document.getElementById("lessonReader");box.innerHTML="";
+ box.appendChild(createSkillFilm(l.title, [l.body,l.section,l.example,l.task].filter(Boolean).join(". ")));
+ document.querySelectorAll("#lessonList .lesson").forEach((r,i)=>r.classList.toggle("active",i===index));
+ const label=document.createElement("span");label.className="tag";label.textContent=`LESSON ${index+1} OF ${lessons.length}`;
+ const title=document.createElement("h3");title.textContent=l.title;
+ const body=document.createElement("p");body.textContent=l.body;
+ const voiceBar=document.createElement("div");voiceBar.className="voice-tools";
+ const speak=document.createElement("button");speak.className="btn";speak.type="button";speak.textContent="🔊 Teach this lesson aloud";speak.onclick=()=>speakText([l.title,l.body,l.section,l.example,l.task].filter(Boolean).join(". "));
+ const ask=document.createElement("button");ask.className="btn secondary";ask.type="button";ask.textContent="Ask about this lesson ↓";ask.onclick=()=>{document.getElementById("learnerQuestion").value="Please explain: "+l.title;document.getElementById("askSkillRise").scrollIntoView({behavior:"smooth"});document.getElementById("learnerQuestion").focus();};
+ voiceBar.append(speak,ask);box.append(label,title,body,voiceBar);
+ if(l.svg){const holder=document.createElement("div");holder.innerHTML=l.svg;box.append(holder.firstElementChild);}
+ const h=document.createElement("h4");h.textContent=l.section||"Example";box.append(h);
+ if(l.code){const code=document.createElement("pre");code.className="code-sample";code.textContent=l.code.replace(/\\n/g,"\n");box.append(code);}
+ const ex=document.createElement("div");ex.className="example-note";ex.textContent=l.example;box.append(ex);
+ const taskHead=document.createElement("h4");taskHead.textContent="Try it yourself";const task=document.createElement("p");task.textContent=l.task;box.append(taskHead,task);
+ const practice=document.createElement("div");practice.className="practice-box";const q=document.createElement("strong");q.textContent=l.question;practice.append(q);
+ const feedback=document.createElement("p");feedback.style.marginBottom="0";feedback.setAttribute("aria-live","polite");
+ l.options.forEach((option,i)=>{const b=document.createElement("button");b.className="btn secondary";b.textContent=option;b.onclick=()=>{feedback.textContent=i===l.answer?"✅ "+l.explain:"Not quite — try again. Read the explanation above and choose once more.";feedback.style.color=i===l.answer?"#ffe7a0":"#ffb8a8";};practice.append(b)});practice.append(feedback);box.append(practice);
+ const nav=document.createElement("div");nav.className="lesson-nav";
+ if(index>0){const prev=document.createElement("button");prev.className="btn secondary";prev.textContent="← Previous lesson";prev.onclick=()=>openLesson(pathId,index-1);nav.append(prev);}
+ const done=document.createElement("button");done.className="btn";done.textContent="✓ Mark lesson complete";done.onclick=()=>{const key=`sp-${pathId}-${index}`;localStorage.setItem(key,"1");renderPath();openLesson(pathId,index);toast("Lesson marked complete");};nav.append(done);
+ if(index<lessons.length-1){const next=document.createElement("button");next.className="btn";next.textContent="Next lesson →";next.onclick=()=>openLesson(pathId,index+1);nav.append(next);}
+ box.append(nav);box.classList.remove("hidden");scrollToLearningTarget(box);
+}
+function filterSkills(){
+ const q=document.getElementById("skillSearch").value.toLowerCase().trim();let shown=0;
+ document.querySelectorAll(".skill-card").forEach(card=>{const match=(card.dataset.search+" "+card.innerText).toLowerCase().includes(q);card.style.display=match?"flex":"none";if(match)shown++});
+ document.getElementById("noSkills").classList.toggle("hidden",shown!==0);
+}
+function skillVisualFor(title,text){
+ const all=(title+" "+text).toLowerCase();
+ const choices=[
+  [/design|colour|color|poster|illustrat|photo|art/,'🎨','Visual example','Plan the layout, choose clear colours, and make the main message easy to notice.'],
+  [/video|film|animat|edit|motion/,'🎬','Storyboard','Plan the scenes, arrange them in order, and use movement to explain one idea at a time.'],
+  [/web|html|css|program|coding|software|ui|ux|app/,'💻','Build a simple version','Start with structure, make the interface clear, test it, and improve it from feedback.'],
+  [/data|spreadsheet|budget|bookkeep|finance|money|account/,'📊','Read the information','Organise the information, check the numbers, and use a simple summary to support decisions.'],
+  [/market|social|seo|sales|business|entrepreneur|customer/,'📣','Know your audience','Understand who needs the solution, share a useful message, and learn from the response.'],
+  [/write|copy|content|cv|resume|interview|communication|speak/,'📝','Prepare your message','Decide what you want to communicate, organise the key points, and review for clarity.'],
+  [/electronics|technical|cad|engineering|problem|time|productivity|career/,'🧩','Solve it step by step','Identify the goal, choose the right tools, test your approach, and improve the result.'],
+  [/safety|cyber|digital|privacy|password|internet/,'🔐','Check before you act','Pause, verify information, protect private details, and choose a safer next step.']
+ ];
+ for(const [re,icon,heading,desc] of choices){if(re.test(all))return {icon,heading,desc};}
+ return {icon:'🌱',heading:'Learn by doing',desc:'Understand the idea, look at the example, practise one step, and review what you learned.'};
+}
+function createSkillFilm(title,narration){
+ const data=skillVisualFor(title,narration);const panel=document.createElement('section');panel.className='skill-film';panel.setAttribute('aria-label','Animated narrated lesson for '+title);
+ const side=document.createElement('div');side.className='skill-film-character';side.innerHTML='<div class="sr-avatar" aria-hidden="true">🧑🏽‍🏫</div><div class="sr-character-name">SkillRise Guide</div><div class="sr-character-role">Your lesson teacher</div>';
+ const main=document.createElement('div');main.className='skill-film-main';
+ const heading=document.createElement('h3');heading.textContent='🎥 '+title+' · Visual lesson';
+ const intro=document.createElement('p');intro.textContent='Follow the guide, look at the example, and listen to the explanation. Lesson length adjusts to the amount of material.';
+ const visual=document.createElement('div');visual.className='skill-film-visual';visual.innerHTML='<div class="sr-visual-icon" aria-hidden="true">'+data.icon+'</div><div class="sr-visual-card"><strong>'+escapeFilmText(data.heading)+'</strong><span>'+escapeFilmText(data.desc)+'</span></div>';
+ const controls=document.createElement('div');controls.className='sr-film-controls';
+ const play=document.createElement('button');play.type='button';play.className='btn';play.textContent='▶ Play narrated lesson';
+ const pause=document.createElement('button');pause.type='button';pause.className='btn secondary';pause.textContent='Ⅱ Pause';
+ const restart=document.createElement('button');restart.type='button';restart.className='btn secondary';restart.textContent='↻ Start again';
+ const progress=document.createElement('div');progress.className='sr-film-progress';const fill=document.createElement('span');progress.append(fill);
+ const status=document.createElement('div');status.className='sr-film-status';status.textContent='Ready · '+Math.max(1,Math.ceil(narration.trim().split(/\s+/).length/125))+' min estimated';
+ const script=document.createElement('div');script.className='sr-film-script';script.textContent=narration;
+ let chunks=narration.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[narration];chunks=chunks.map(x=>x.trim()).filter(Boolean);let current=0,playing=false,paused=false,runId=0;
+ function update(){fill.style.width=Math.round((current/Math.max(1,chunks.length))*100)+'%';}
+ function sayNext(id){if(id!==runId||!playing)return;if(current>=chunks.length){playing=false;paused=false;status.textContent='Lesson finished · Well done!';play.textContent='▶ Play again';update();return;}const sentence=chunks[current];status.textContent='Scene '+(current+1)+' of '+chunks.length+' · Follow along';visual.querySelector('.sr-visual-card strong').textContent=current%3===0?data.heading:(current%3===1?'Look at the example':'Now practise');visual.querySelector('.sr-visual-card span').textContent=sentence;update();
+ if('speechSynthesis' in window && 'SpeechSynthesisUtterance' in window){window.speechSynthesis.cancel();const utter=new SpeechSynthesisUtterance(sentence);utter.rate=0.92;utter.pitch=1.02;utter.onend=()=>{if(id!==runId||!playing)return;current++;update();setTimeout(()=>sayNext(id),420)};utter.onerror=()=>{if(id!==runId)return;current++;setTimeout(()=>sayNext(id),900)};window.speechSynthesis.speak(utter);}else{status.textContent='Voice unavailable in this browser. Read the lesson text below.';playing=false;}}
+ play.addEventListener('click',()=>{if(!('speechSynthesis' in window)){status.textContent='Your browser does not support voice narration. Read the full explanation below.';return;}if(paused){paused=false;playing=true;window.speechSynthesis.resume();status.textContent='Narration resumed';return;}runId++;current=0;playing=true;paused=false;play.textContent='▶ Restart narration';sayNext(runId)});
+ pause.addEventListener('click',()=>{if('speechSynthesis' in window){if(playing&&!paused){window.speechSynthesis.pause();paused=true;playing=false;status.textContent='Paused';}else if(paused){paused=false;playing=true;window.speechSynthesis.resume();status.textContent='Narration resumed';}}});
+ restart.addEventListener('click',()=>{runId++;if('speechSynthesis' in window)window.speechSynthesis.cancel();current=0;playing=false;paused=false;update();status.textContent='Ready · '+Math.max(1,Math.ceil(narration.trim().split(/\s+/).length/125))+' min estimated';play.textContent='▶ Play narrated lesson';visual.querySelector('.sr-visual-card strong').textContent=data.heading;visual.querySelector('.sr-visual-card span').textContent=data.desc;});
+ controls.append(play,pause,restart);main.append(heading,intro,visual,controls,progress,status,script);panel.append(side,main);return panel;
+}
+function escapeFilmText(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function showSkillDetail(title,lessonText,project){
+ const box=document.getElementById("skillDetail");
+ const key=title.toLowerCase();
+ const courseMap={
+ 'video editing':[
+  ['Lesson 1 · Plan before editing','A good video starts with a purpose. Decide who will watch, what they should understand, and what action or idea they should remember. Write a tiny storyboard before opening the editor. For a 20-second tutorial, plan a 3-second opening, 12 seconds of demonstration, and a 5-second recap.','🗒️','IDEA → SHOTS → EDIT'],
+  ['Lesson 2 · Arrange and trim clips','Import footage you recorded or have permission to use. Place clips on the timeline in the order that makes the story easiest to follow. Trim the start and end of each clip to remove long pauses, accidental camera movement, and repeated information. Keep the meaning intact; do not cut away a step the viewer needs.','🎞️','CLIP A  →  CLIP B  →  CLIP C'],
+  ['Lesson 3 · Add titles and sound','Use a short title that tells viewers what the video teaches. Keep text large enough for a phone screen and leave it visible long enough to read. Make speech clear, keep background music quieter than the voice, and use music or footage only when you have permission to use it.','🔊','VOICE CLEAR · MUSIC QUIET'],
+  ['Lesson 4 · Export and review','Watch the entire video before exporting. Check that the picture is upright, text is not cut off, sound is balanced, and the ending feels complete. Export at a resolution suitable for the platform, then watch the exported file too—sometimes the final file reveals issues that were missed in the editor.','✅','EDIT → PREVIEW → EXPORT → CHECK']
+ ],
+ 'digital marketing':[
+  ['Lesson 1 · Understand the audience','Marketing begins with people, not posting. Describe the group you want to help, what they need, and what questions they ask. A student audience may need affordable study materials; a small shop audience may need clear product information. Avoid guessing: use respectful questions and feedback to learn what people actually need.','👥','WHO?  NEED?  WHY?'],
+  ['Lesson 2 · Make one clear message','Choose one useful benefit and express it simply. A post should not try to say everything at once. Support claims with real information, avoid fake urgency or exaggerated promises, and make prices or important conditions clear when relevant.','💡','ONE AUDIENCE → ONE MESSAGE'],
+  ['Lesson 3 · Build a content plan','Plan a helpful mix: explain a problem, demonstrate a solution, and answer a common question. Choose a realistic posting schedule you can maintain. Use original photos or permitted assets, add readable captions, and make content accessible to people watching without sound.','🗓️','TEACH · DEMONSTRATE · ANSWER'],
+  ['Lesson 4 · Measure and improve','Decide what success means before posting. Reach tells you how many accounts saw a post; saves or thoughtful replies may indicate usefulness; clicks may show interest in a next step. Compare similar posts fairly, learn from results, and protect audience privacy. Do not buy fake engagement.','📈','GOAL → MEASURE → LEARN']
+ ],
+ 'entrepreneurship':[
+  ['Lesson 1 · Find a real problem','A business idea is stronger when it solves a problem people genuinely experience. Observe everyday frustrations, then describe the problem in one sentence without jumping straight to your favourite solution. For example: “Students struggle to keep assignment dates organised.”','🔎','OBSERVE → DEFINE THE PROBLEM'],
+  ['Lesson 2 · Learn from potential customers','Speak respectfully with a few people who experience the problem. Ask open questions such as “How do you handle this now?” and “What is most difficult?” Listen instead of trying to convince them. Do not collect unnecessary personal information, and remember that a few conversations are clues, not proof that everyone wants the product.','🗣️','ASK → LISTEN → NOTE PATTERNS'],
+  ['Lesson 3 · Test a small solution','Create the simplest safe version that can test your idea: a paper sketch, sample flyer, simple webpage, or manual service. Set a small budget you can afford to lose, ask for feedback, and improve before spending more. Never promise results you cannot deliver.','🧪','SMALL TEST → FEEDBACK → IMPROVE'],
+  ['Lesson 4 · Understand costs and value','List the costs of providing the product or service, including materials, transport, packaging, time, and fees. Revenue is the money received from sales; profit is what remains after costs. Keep records and check whether customers value the solution enough to support its costs.','🧮','REVENUE − COSTS = PROFIT']
+ ],
+ 'spreadsheets & data':[
+  ['Lesson 1 · Build a clean table','A spreadsheet organises information into columns and rows. Give each column one clear heading, such as Date, Item, Quantity, and Cost. Put one record on each row, keep date and number formats consistent, and avoid merging cells inside a data table because it makes sorting harder.','📋','COLUMN = TYPE OF DETAIL · ROW = RECORD'],
+  ['Lesson 2 · Use a formula','A formula begins with an equals sign. For example, =B2*C2 multiplies the value in B2 by the value in C2. If B2 is quantity and C2 is price per item, the result is the total for that row. Check that your cell references point to the intended numbers.','✖️','=B2 × C2 → TOTAL'],
+  ['Lesson 3 · Summarise the data','SUM adds numbers, while AVERAGE calculates their mean. For example, =SUM(D2:D6) adds the values from D2 to D6. A summary is only trustworthy if the underlying entries are accurate, so check for missing values, duplicates, and typing mistakes first.','🧮','SUM · AVERAGE · CHECK'],
+  ['Lesson 4 · Present a useful result','Use a chart when it makes a pattern easier to understand. Bar charts compare categories; line charts can show change over time. Add a clear title and labels, choose a scale that does not mislead, and explain what the chart does—and does not—show.','📊','QUESTION → TABLE → CHART → INSIGHT']
+ ],
+ 'ui/ux design':[
+  ['Lesson 1 · Know the difference','UI means user interface: the visible controls, text, buttons, and screens. UX means user experience: how easy and satisfying it is for someone to complete a task. A beautiful screen can still have poor UX if users cannot find the next step.','📱','UI = WHAT PEOPLE USE · UX = HOW IT FEELS'],
+  ['Lesson 2 · Map the user journey','Choose one task, such as finding a course and starting a lesson. Write the steps the user takes, what they expect at each step, and where confusion may happen. Keep the flow focused and provide clear labels so people know what will happen when they tap.','🧭','OPEN → FIND → CHOOSE → LEARN'],
+  ['Lesson 3 · Sketch a screen','Draw a rough wireframe before worrying about decoration. Put the most important action where it is easy to find, group related information, use readable text, and leave enough space around buttons. A wireframe is a plan, not a finished visual design.','✏️','HEADER · CONTENT · CLEAR ACTION'],
+  ['Lesson 4 · Test and improve','Ask someone to try a realistic task using your sketch or prototype. Give them the goal without telling them where to tap. Watch where they hesitate and ask what they expected. Improve the confusing parts, then test again. Do not assume feedback from one person represents every user.','🧑‍🤝‍🧑','PROTOTYPE → TEST → IMPROVE']
+ ],
+ 'digital safety':[
+  ['Lesson 1 · Recognise suspicious messages','Scams may create urgency, promise prizes, impersonate trusted organisations, or ask you to share codes. Pause before tapping links. Check the sender through a separate trusted channel and visit official services directly instead of relying on a message link.','🚩','PAUSE → CHECK → VERIFY'],
+  ['Lesson 2 · Protect accounts','Use a unique password for each important account and a password manager when available. Turn on multi-factor authentication. Never share one-time login codes with someone who contacts you unexpectedly—even if they claim to be support staff.','🔐','UNIQUE PASSWORD + EXTRA SIGN-IN CHECK'],
+  ['Lesson 3 · Review privacy','Check who can see your posts, location, contact details, and friend list. Share only what is needed. Before posting a photo, consider whether it reveals an address, school routine, ID card, or private information. Ask permission before sharing images of other people.','🛡️','SHARE LESS · CHECK SETTINGS'],
+  ['Lesson 4 · Verify information','Before forwarding a claim, check the original source, date, context, and whether reliable independent sources agree. Images and screenshots can be edited or taken out of context. If you cannot verify a claim, do not present it as fact.','🔍','SOURCE → DATE → CONTEXT → CONFIRM']
+ ]
+ };
+ const lessons=courseMap[key]||lessonText.split(';').map((x,i)=>['Lesson '+(i+1),x.trim(),'📘','LEARN → PRACTISE']);
+ box.innerHTML='';
+ const hero=document.createElement('div');hero.className='card';hero.style.marginBottom='14px';
+ const badge=document.createElement('span');badge.className='tag';badge.textContent='SKILLRISE CLASSROOM · LEARN AT YOUR OWN PACE';
+ const h=document.createElement('h2');h.textContent=title+' · Complete Beginner Class';
+ const intro=document.createElement('p');intro.textContent='Welcome to class. There is no countdown and no forced short video. Read each explanation, study the illustration, do the activity, and move on when you are ready. You can return to any lesson to revise.';
+ hero.append(badge,h,intro);box.append(hero);
+ const film=createSkillFilm(title,lessons.map(x=>x[0]+'. '+x[1]).join(' ')+'. Your project: '+project);box.append(film);
+ let current=0;
+ const lessonPanel=document.createElement('article');lessonPanel.className='card';lessonPanel.style.marginTop='14px';
+ const progress=document.createElement('div');progress.className='progress-wrap';progress.innerHTML='<div class="progress" style="width:0%"></div>';
+ const progressLabel=document.createElement('p');progressLabel.className='tag';
+ const lessonTitle=document.createElement('h3');const lessonBody=document.createElement('p');
+ const illustration=document.createElement('div');illustration.className='skill-film-visual';illustration.style.minHeight='150px';
+ const diagram=document.createElement('div');diagram.style.textAlign='center';diagram.style.width='100%';diagram.style.padding='12px';diagram.style.border='1px solid #5b4b20';diagram.style.borderRadius='12px';diagram.style.background='#171717';
+ const bigIcon=document.createElement('div');bigIcon.style.fontSize='3.5rem';
+ const diagramLabel=document.createElement('strong');diagramLabel.style.display='block';diagramLabel.style.color='#f4c542';diagramLabel.style.marginTop='8px';
+ const diagramSub=document.createElement('p');diagramSub.style.margin='8px 0 0';diagramSub.style.color='#eee';
+ diagram.append(bigIcon,diagramLabel,diagramSub);illustration.append(diagram);
+ const teacher=document.createElement('div');teacher.className='example-note';teacher.innerHTML='<strong>🧑🏽‍🏫 Teacher explains:</strong> Read the lesson slowly and connect it to the example. If it is not clear yet, read it again and try the activity before moving on.';
+ const activityTitle=document.createElement('h4');activityTitle.textContent='Guided classroom activity';
+ const activity=document.createElement('p');
+ const exampleTitle=document.createElement('h4');exampleTitle.textContent='Remember this';
+ const example=document.createElement('p');
+ const nav=document.createElement('div');nav.className='lesson-nav';
+ const prev=document.createElement('button');prev.className='btn secondary';prev.textContent='← Previous lesson';
+ const next=document.createElement('button');next.className='btn';next.textContent='Next lesson →';
+ const done=document.createElement('button');done.className='btn secondary';done.textContent='✓ Mark course complete';
+ const status=document.createElement('p');status.className='tag';status.setAttribute('aria-live','polite');
+ prev.onclick=()=>{if(current>0){current--;renderLesson()}};
+ next.onclick=()=>{if(current<lessons.length-1){current++;renderLesson()}};
+ done.onclick=()=>{localStorage.setItem('skillrise-course-'+key,'complete');status.textContent='🎉 Course marked complete on this device. Your project is the next step!'};
+ nav.append(prev,next,done);
+ lessonPanel.append(progressLabel,progress,lessonTitle,lessonBody,illustration,teacher,activityTitle,activity,exampleTitle,example,nav,status);box.append(lessonPanel);
+ const projectCard=document.createElement('div');projectCard.className='card';projectCard.style.marginTop='14px';
+ const ph=document.createElement('h3');ph.textContent='🏁 Final practical project';const pt=document.createElement('p');pt.textContent=project;
+ const checklist=document.createElement('p');checklist.textContent='Project checklist: plan your goal, create your first version, check it carefully, ask for feedback, and make one improvement.';
+ projectCard.append(ph,pt,checklist);box.append(projectCard);
+ const close=document.createElement('button');close.className='btn secondary';close.style.marginTop='12px';close.textContent='Close class';close.onclick=()=>box.classList.add('hidden');box.append(close);
+ function renderLesson(){const l=lessons[current];progressLabel.textContent='LESSON '+(current+1)+' OF '+lessons.length+' · TAKE YOUR TIME';progress.firstElementChild.style.width=((current+1)/lessons.length*100)+'%';lessonTitle.textContent=l[0];lessonBody.textContent=l[1];bigIcon.textContent=l[2];diagramLabel.textContent=l[3];diagramSub.textContent='Study this visual cue, then explain it in your own words.';activity.textContent='Try this now: '+(current===0?'Write the main idea of this lesson in one sentence.':current===lessons.length-1?'Review the earlier lessons and apply the steps to your project.':'Apply this idea to a small example of your own, then check whether it works.');example.textContent='Key point: '+l[1].split('. ').slice(0,2).join('. ')+'.';prev.disabled=current===0;prev.style.opacity=current===0?'.45':'1';next.textContent=current===lessons.length-1?'Review first lesson ↺':'Next lesson →';if(current===lessons.length-1)next.onclick=()=>{current=0;renderLesson()};else next.onclick=()=>{current++;renderLesson()};}
+ renderLesson();box.classList.remove('hidden');scrollToLearningTarget(box);
+}
+function setAcademyMode(mode,button){
+ document.querySelectorAll('.academy-controls button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+ const caption=document.getElementById('academyCaption'), explanation=document.getElementById('academyExplanation'), label=document.getElementById('academyStageLabel');
+ if(mode==='animation'){label.textContent='ANIMATED EXPLAINER · COLOUR & CONTRAST';caption.textContent='The first poster uses similar pale colours, so the words are hard to read. Strong contrast helps the message stand out.';explanation.innerHTML='<h4>What you will learn</h4><p>Colour contrast helps important words stand out. A designer should make sure the text is readable on a phone and that the colours support the message.</p>';document.getElementById('badPoster').style.opacity='1';}
+ else if(mode==='notes'){label.textContent='READABLE NOTES · COLOUR & CONTRAST';caption.textContent='Remember: contrast is the difference between foreground and background. Check readability, not just whether colours look attractive.';explanation.innerHTML='<h4>Lesson notes</h4><p>Use enough difference in brightness between text and background. Keep body text comfortable to read, and do not communicate meaning through colour alone—labels and symbols can help too.</p><p><strong>Try it:</strong> Compare dark text on a pale background with pale text on a white background.</p>';}
+ else{label.textContent='REAL-LIFE DEMONSTRATION · DESIGN REVIEW';caption.textContent='Imagine showing both versions to a friend on a phone. Ask which message they can understand fastest, then improve the weaker version.';explanation.innerHTML='<h4>Real-life example</h4><p>A small business needs a sale flyer. Before publishing, the designer previews it on a phone, checks the title and date, asks someone to read it, and fixes anything unclear.</p><p><strong>Try it:</strong> Make a simple flyer and ask another person what they notice first.</p>';}
+ try{localStorage.setItem('srAcademyMode',mode)}catch(e){} updateSkillRiseDashboard();
+}
+function answerAcademyQuiz(correct){
+ const f=document.getElementById('academyQuizFeedback');
+ if(correct){f.textContent='✅ Correct! Contrast makes text and important elements easier to distinguish.';f.style.color='#ffe7a0';try{localStorage.setItem('srAcademyQuizPassed','1')}catch(e){}toast('Knowledge check passed!');}
+ else{f.textContent='Not quite. Look at the two poster examples again and try once more.';f.style.color='#ffb8a8'}
+ updateSkillRiseDashboard();
+}
+function updateSkillRiseDashboard(){
+ let lessons=0;Object.keys(paths).forEach(id=>paths[id].lessons.forEach((_,i)=>{try{if(localStorage.getItem(`sp-${id}-${i}`)==='1')lessons++}catch(e){}}));
+ let quiz=0,activities=0;try{quiz=localStorage.getItem('srAcademyQuizPassed')==='1'?1:0;activities=(localStorage.getItem('srAcademyMode')?1:0)+(quiz?1:0)}catch(e){}
+ const a=document.getElementById('dashLessons');if(a)a.textContent=lessons;const b=document.getElementById('dashQuizzes');if(b)b.textContent=quiz;const c=document.getElementById('dashActivities');if(c)c.textContent=activities;
+ const badges=document.getElementById('achievementBadges');if(badges){let html='';html+=lessons>0?'<span class="badge">🌱 First Step — unlocked</span>':'<span class="badge">🌱 First Step — complete a lesson</span>';html+=quiz?'<span class="badge">🧠 Quick Thinker — unlocked</span>':'<span class="badge">🧠 Quick Thinker — pass a quiz</span>';html+=lessons>=5?'<span class="badge">📚 Dedicated Learner — unlocked</span>':'<span class="badge">📚 Dedicated Learner — complete 5 lessons</span>';badges.innerHTML=html;}
+}
+
+function speakText(text){
+ if(!('speechSynthesis' in window)){document.getElementById('voiceStatus').textContent='This browser does not support spoken audio. Try opening SkillRise in Chrome.';return;}
+ window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(String(text||''));utterance.lang='en-NG';utterance.rate=0.92;utterance.pitch=1;
+ const voices=window.speechSynthesis.getVoices();const english=voices.find(v=>/^en(-|_)/i.test(v.lang));if(english)utterance.voice=english;
+ utterance.onstart=()=>{const s=document.getElementById('voiceStatus');if(s)s.textContent='SkillRise is reading aloud. Tap Stop voice to stop.'};utterance.onerror=()=>{const s=document.getElementById('voiceStatus');if(s)s.textContent='Could not play speech on this device. Check media volume and browser support.'};window.speechSynthesis.speak(utterance);
+}
+function stopSkillRiseVoice(){if('speechSynthesis'in window)window.speechSynthesis.cancel();const s=document.getElementById('voiceStatus');if(s)s.textContent='Voice stopped.';}
+function readAssistantAnswer(){const a=document.getElementById('assistantAnswer');if(a)speakText(a.innerText);}
+function startVoiceQuestion(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){document.getElementById('voiceStatus').textContent='Voice typing is not supported in this browser. Type your question instead, or try Chrome.';return;}
+ const rec=new SR();rec.lang='en-NG';rec.interimResults=false;rec.maxAlternatives=1;
+ rec.onstart=()=>document.getElementById('voiceStatus').textContent='Listening… speak clearly now.';
+ rec.onresult=e=>{document.getElementById('learnerQuestion').value=e.results[0][0].transcript;document.getElementById('voiceStatus').textContent='Question captured. Tap Ask SkillRise to get an explanation.';};
+ rec.onerror=e=>document.getElementById('voiceStatus').textContent='Could not hear the question ('+e.error+'). Check microphone permission or type it instead.';
+ rec.start();
+}
+function askSkillRise(event){
+ event.preventDefault();const raw=document.getElementById('learnerQuestion').value.trim();if(!raw)return;const q=raw.toLowerCase();let answer='';
+ const lessons=[];Object.keys(lessonContent).forEach(id=>lessonContent[id].forEach(l=>lessons.push({path:id,...l})));
+ const hit=lessons.map(l=>({l,score:(l.title+' '+l.body+' '+l.section+' '+l.example+' '+l.task).toLowerCase().split(/[^a-z0-9+#]+/).filter(w=>w.length>2&&q.includes(w)).length})).sort((a,b)=>b.score-a.score)[0];
+ if(/hello|hi |hey\b|good morning|good afternoon/.test(q))answer='Hello, learner! 😊 I am here to help you understand skills step by step. Ask me about website development, graphic design, content writing, or another skill shown on SkillRise.';
+ else if(/what is html|html mean|html stand/.test(q))answer='HTML means HyperText Markup Language. It gives a webpage its structure, such as headings, paragraphs, links, and images. Example: <h1>My heading</h1> makes a main heading. Think of HTML as the frame of a house.';
+ else if(/what is css|css mean|css stand/.test(q))answer='CSS means Cascading Style Sheets. It controls how a webpage looks, including colours, fonts, spacing, borders, and layout. HTML gives the page structure; CSS styles that structure.';
+ else if(/javascript|what is coding|programming/.test(q))answer='JavaScript is a programming language that can make webpages interactive—for example, responding when a visitor taps a button. Coding means writing instructions that a computer can run. Start with small examples and test each change.';
+ else if(/graphic design|design skill|colour|color|typography|contrast/.test(q))answer='Graphic design communicates a message visually. Start by deciding who the design is for and what they need to notice first. Then use readable text, clear spacing, a small colour palette, and strong contrast. Practise by making a flyer for a fictional business.';
+ else if(/video edit|editing video/.test(q))answer='To begin video editing: 1) Decide the message; 2) choose clips you own or can use; 3) arrange them in order; 4) trim unnecessary pauses; 5) add readable titles and balanced audio; 6) preview the whole video; 7) export and check the result.';
+ else if(/content writ|write a caption|copywriting/.test(q))answer='Good content writing is clear, useful, and suited to its audience. Decide who will read it, what they need to know, and what action or idea matters most. Draft your message, use specific details, then check spelling and punctuation.';
+ else if(/business|entrepreneur|start a business/.test(q))answer='Start by identifying a real problem people have. Talk to a few potential customers, write down what they currently do, sketch a simple solution, and test it cheaply before spending much money. Improve the idea using honest feedback.';
+ else if(/premium|price|payment|pay|naira|₦/.test(q))answer='For payment questions, check the current Premium Payments section on SkillRise and confirm the recipient name and account details inside your own banking app before sending money. This demo cannot verify payments automatically. Never share your PIN, password, or OTP.';
+ else if(/who made|founder|creator/.test(q))answer='SkillRise is the learning project you are building. The site presents its founder credit in the project details; the current prototype is still a demo and some features need a real backend to work for everyone.';
+ else if(/speak|talk|voice|read aloud/.test(q))answer='Tap “Teach this lesson aloud” to hear the current lesson, or use “Read answer aloud” after asking a question. If voice does not play, turn up media volume and open the page in a browser that supports speech synthesis.';
+ else if(hit&&hit.score>0){const l=hit.l;answer=l.title+'\n\nSimple explanation: '+l.body+'\n\nExample: '+(l.example||l.section||'Review the lesson example above.')+'\n\nTry this: '+(l.task||'Practise the idea with a small project.');}
+ else answer='I am not fully sure what you mean yet. Try asking one clear question, such as “What is HTML?”, “How do I make a flyer?”, “Explain this lesson in simpler words”, or “What project should I practise?” This prototype can answer questions covered by its lessons, but it is not yet connected to a live AI service.';
+ document.getElementById('assistantAnswer').textContent=answer;
+ try{const history=JSON.parse(localStorage.getItem('srQuestionHistory')||'[]');history.push({question:raw,answer:answer,date:new Date().toISOString()});localStorage.setItem('srQuestionHistory',JSON.stringify(history.slice(-50)));}catch(e){}
+}
+let premiumOrderSummary='';
+function getSkillRisePackageId(){const label=(document.getElementById('premiumPackage')?.value||'').toLowerCase();if(label.includes('5 skills'))return 'skills5';if(label.includes('7 skills'))return 'skills7';if(label.includes('all skills'))return 'all';if(label.includes('normal premium'))return 'normal';return '';}
+function selectPackage(label){const el=document.getElementById('packageChoice');if(el)el.textContent='Selected: '+label+'. Choose online payment or submit a bank-transfer receipt below.';const pkg=document.getElementById('premiumPackage');if(pkg)pkg.value=label;const id=document.getElementById('premiumPackageId');if(id)id.value=getSkillRisePackageId();const form=document.getElementById('paymentSubmission');if(form)form.scrollIntoView({behavior:'smooth',block:'start'});}
+function showPaymentMessage(message){const out=document.getElementById('premiumOrderResult');if(out){out.classList.remove('hidden');out.textContent=message;out.scrollIntoView({behavior:'smooth',block:'center'});}}
+async function startPaystackPayment(){const v=id=>(document.getElementById(id)?.value||'').trim();const packageId=getSkillRisePackageId();if(!packageId){showPaymentMessage('Please choose a package first.');return;}if(!v('premiumEmail')){showPaymentMessage('Please enter your email address for online checkout.');document.getElementById('premiumEmail')?.focus();return;}if(!v('premiumName')||!v('premiumPhone')){showPaymentMessage('Please enter your name and phone number first.');return;}try{const r=await fetch('/api/payments/initialize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({packageId,email:v('premiumEmail'),name:v('premiumName'),phone:v('premiumPhone'),skills:v('premiumSkills')})});const data=await r.json();if(!r.ok||!data.authorizationUrl)throw new Error(data.error||'Payment service is not connected yet.');window.location.href=data.authorizationUrl;}catch(e){showPaymentMessage(e.message+' Do not pay from this offline file. SkillRise must first be hosted and its backend configured.');}}
+async function submitPremiumOrder(event){event.preventDefault();const form=document.getElementById('premiumOrderForm');const file=document.getElementById('premiumReceipt').files[0];if(!file){showPaymentMessage('Please attach your transfer receipt.');return;}if(file.size>8*1024*1024){showPaymentMessage('Please choose a receipt smaller than 8 MB.');return;}const v=id=>(document.getElementById(id)?.value||'').trim();const packageId=getSkillRisePackageId();if(!packageId){showPaymentMessage('Please choose a package first.');return;}try{const fd=new FormData();fd.append('packageId',packageId);fd.append('name',v('premiumName'));fd.append('phone',v('premiumPhone'));fd.append('skills',v('premiumSkills'));fd.append('transferReference',v('premiumReference'));fd.append('receipt',file);const r=await fetch('/api/manual-transfers',{method:'POST',body:fd});const data=await r.json();if(!r.ok)throw new Error(data.error||'Could not submit receipt.');premiumOrderSummary='SkillRise order reference: '+data.orderReference+'
+Package: '+v('premiumPackage')+'
+Status: Awaiting independent transfer verification.';showPaymentMessage(data.message+' Order reference: '+data.orderReference+'. Keep this reference for support.');document.getElementById('copyOrderButton').classList.remove('hidden');}catch(e){showPaymentMessage(e.message+' If you opened this as a local HTML file, receipt upload is unavailable until the SkillRise backend is hosted. Do not send money until official payment details are confirmed.');}}
+async function copyPremiumOrder(){try{await navigator.clipboard.writeText(premiumOrderSummary);alert('Order details copied. Send them privately with the receipt to the SkillRise administrator.');}catch(e){const t=document.createElement('textarea');t.value=premiumOrderSummary;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('Order details copied. Send them privately with the receipt to the SkillRise administrator.');}}
+function showAbout(){const el=document.getElementById("about");el.classList.toggle("hidden");if(!el.classList.contains("hidden"))el.scrollIntoView({behavior:"smooth"})}
+function sendFeedback(e){e.preventDefault();const value=document.getElementById("feedback").value.trim();if(!value)return;const items=JSON.parse(localStorage.getItem("spIdeas")||"[]");items.push({idea:value,date:new Date().toISOString()});localStorage.setItem("spIdeas",JSON.stringify(items));document.getElementById("feedbackResult").textContent="Thanks! Your idea has been saved on this device.";document.getElementById("feedback").value="";toast("Idea saved")}
+function toast(s){const t=document.getElementById("toast");t.textContent=s;t.style.display="block";setTimeout(()=>t.style.display="none",2300)}
+
+// Allow tapping anywhere on the skill card, while keeping the button behaviour intact.
+document.querySelectorAll(".skill-card").forEach(card=>{
+  card.setAttribute("tabindex","0");
+  card.setAttribute("role","group");
+  card.addEventListener("click",event=>{
+    if(event.target.closest("button")) return;
+    const button=card.querySelector("button");
+    if(button) button.click();
+  });
+  card.addEventListener("keydown",event=>{
+    if((event.key==="Enter"||event.key===" ") && event.target===card){
+      event.preventDefault();
+      const button=card.querySelector("button");
+      if(button) button.click();
+    }
+  });
+});
+
+document.getElementById("year").textContent=new Date().getFullYear();renderPath();updateSkillRiseDashboard();
+</script>
+</body></html>
